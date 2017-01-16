@@ -1,15 +1,35 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Main from "../components/Main"
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Redux from 'redux'
+import { Component } from 'react'
+import { Provider } from 'react-redux'
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <Main/>
-            </div>
-        )
-    }
-}
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import Main from "./components/Main"
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+import Actions from "./actions/ActionTypes";
+import sagas from './saga'
+import rootReducer from './reducer'
+
+const sagaMiddleware = createSagaMiddleware();
+let middleware = [sagaMiddleware];
+
+const store = createStore(
+  rootReducer, compose(
+    applyMiddleware(...middleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f)
+);
+sagaMiddleware.run(sagas);
+
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Main/>
+  </Provider>,
+
+  document.getElementById('root')
+);
+
+store.dispatch({type: Actions.INITIALIZE_DATA});
+

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import RepoActions from "../actions.RepoActions"
+import { connect } from 'react-redux';
+import RepoActions from "../actions/RepoActions"
 
 class Main extends Component {
   constructor() {
     super();
-    // this.state = {
-    //   bookName: "",
-    //   bookList: []
-    // }
+    this.state = {
+        bookName: ""
+    }
   }
 
   handleChange(event) {
@@ -15,15 +15,15 @@ class Main extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+      event.preventDefault();
+      let data = this.state.bookName;
 
-    // const url = "https://www.googleapis.com/books/v1/volumes?q="
-    // return fetch(url + this.state.bookName).then(response => {
-    //   return response.json()
-    // }).then(data => {
-    //   this.setState({ bookList: data.items });
-
-    // })
+      return new Promise((resolve, reject) => {
+          this.props.serviceFetchRepo(data, resolve, reject)
+      }).then((val) => {
+          this.props.updateUI("uiSubmitting", false);
+      })
+          .catch((err) => console.log("rejected:", err));
   }
 
   render() {

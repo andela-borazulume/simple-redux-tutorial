@@ -2,7 +2,7 @@ import { takeEvery, takeLatest } from 'redux-saga'
 import { take,call, put,select } from 'redux-saga/effects'
 import Actions from "../actions/ActionTypes";
 
-import { API } from '../lib/Api'
+import { Api } from '../lib/Api'
 
 export function* handleServiceGetGithubRepos(action) {
   try {
@@ -11,7 +11,7 @@ export function* handleServiceGetGithubRepos(action) {
 
     var payload = action.payload;
 
-    var fetched_repos = yield call(API.getRepos, payload.data);
+    var fetched_repos = yield call(Api.getRepos, payload.data);
 
     yield put({type: Actions.FETCH_REPOS_SUCCESS, payload: {repos: fetched_repos}});
     if (payload.resolve) {
