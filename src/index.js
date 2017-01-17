@@ -9,27 +9,25 @@ import createSagaMiddleware from 'redux-saga'
 import Main from "./components/Main"
 
 import Actions from "./actions/ActionTypes";
-import sagas from './saga'
+// import sagas from './saga'
 import rootReducer from './reducer'
 
-const sagaMiddleware = createSagaMiddleware();
-let middleware = [sagaMiddleware];
+// const sagaMiddleware = createSagaMiddleware();
+// let middleware = [sagaMiddleware];
 
 const store = createStore(
-  rootReducer, compose(
-    applyMiddleware(...middleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f)
+  rootReducer
 );
-sagaMiddleware.run(sagas);
+// sagaMiddleware.run(sagas);
 
 
 ReactDOM.render(
   <Provider store={store}>
     <Main/>
-  </Provider>,
-
+  </Provider>
+,
   document.getElementById('root')
 );
 
-store.dispatch({type: Actions.INITIALIZE_DATA});
+// store.dispatch({type: Actions.INITIALIZE_DATA});
 

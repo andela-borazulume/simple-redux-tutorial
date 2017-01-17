@@ -14,11 +14,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: '/index.html',
             template: 'index.html'
-        }),
-        "transform-runtime", {
-            "polyfill": false,
-            "regenerator": true
-        }
+        })
+        // ,
+        // "transform-runtime", {
+        //     "polyfill": false,
+        //     "regenerator": true
+        // }
     ],
     module: {
         loaders: [
